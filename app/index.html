@@ -1,23 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
-<link rel="stylesheet" href="./style.css">
+<title>NEON VICE Cover Studio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
-  </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+<header id="appHeader">
+  <div class="brand"><span class="brand-mark">NV</span> NEON VICE <span class="brand-sub">Cover Studio</span></div>
+  <div class="brand-tag">Seven-panel GTA-style story covers &middot; rain, neon &amp; dusk</div>
+</header>
+<main id="stage">
+  <canvas id="cover" width="1280" height="720"></canvas>
+  <p id="loadError" class="error"></p>
 </main>
-<script type="module" src="./src/main.js"></script>
+<section id="editor">
+  <div class="panel">
+    <h2>Layout</h2>
+    <div class="row">
+      <button data-layout="story" class="active">7-Panel Story</button>
+      <button data-layout="classic">5-Panel Classic</button>
+      <button data-layout="focus">Hero Focus</button>
+    </div>
+    <div class="row">
+      <button id="nightToggle" class="active">NIGHT</button>
+      <button id="wantedToggle" class="active">WANTED pill</button>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Cover text</h2>
+    <label>Title <input id="fieldTitle" value="NEON VICE" maxlength="24"></label>
+    <label>Script <input id="fieldScript" value="Midnight Rain" maxlength="32"></label>
+    <label>Quote <input id="fieldQuote" value="THE CITY NEVER DRIES" maxlength="48"></label>
+    <label>Station <input id="fieldStation" value="VICE FM 99.9" maxlength="24"></label>
+    <label>Tagline <input id="fieldTagline" value="THE CITY NEVER DRIES &middot; COMING SOON" maxlength="64"></label>
+  </div>
+  <div class="panel">
+    <h2>Panel &mdash; <span id="panelName"></span></h2>
+    <label>Panel
+      <select id="panelSelect"></select>
+    </label>
+    <label>Place <input id="panelPlace" maxlength="24"></label>
+    <label>Time <input id="panelTime" maxlength="12"></label>
+    <label>Flavor <input id="panelFlavor" maxlength="24"></label>
+    <label>Zoom <input id="panelZoom" type="range" min="0.8" max="2" step="0.01" value="1"></label>
+    <label>Shift X <input id="panelDx" type="range" min="-120" max="120" step="1" value="0"></label>
+    <label>Shift Y <input id="panelDy" type="range" min="-120" max="120" step="1" value="0"></label>
+    <label>Replace photo <input id="panelUpload" type="file" accept="image/*"></label>
+  </div>
+  <div class="panel">
+    <h2>Export PNG</h2>
+    <div class="row">
+      <button id="exportLandscape">1280 &times; 720</button>
+      <button id="exportSquare">1080 &times; 1080</button>
+      <button id="exportPortrait">1024 &times; 1280</button>
+    </div>
+    <p class="hint">Pick a layout, edit the text, drop in your own photos, export the size you need. Everything runs offline in your browser.</p>
+  </div>
+</section>
+<script type="module" src="src/main.js"></script>
 </body>
 </html>

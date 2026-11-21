@@ -1,12 +1,119 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
-body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+@font-face {
+  font-family: 'Oswald';
+  src: url('fonts/Oswald.ttf') format('truetype');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('fonts/Pacifico.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anton';
+  src: url('fonts/Anton.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+header[hidden], #editor[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: #04060e;
+  color: #e8ecf4;
+  font-family: 'Oswald', sans-serif;
+}
+body.shot-mode { background: #04060e; }
+body.shot-mode #stage { padding: 0; }
+body.shot-mode #cover { display: block; margin: 0; max-width: none; }
+body.shot-editor { display: grid; grid-template-columns: 660px 1fr; column-gap: 10px; }
+body.shot-editor header { grid-column: 1 / -1; padding: 8px 14px; }
+body.shot-editor #stage { padding: 8px 0 8px 10px; }
+body.shot-editor #cover { max-width: 650px; }
+body.shot-editor #editor { grid-template-columns: 1fr 1fr; padding: 8px 10px 8px 0; gap: 8px; }
+body.shot-editor .panel { padding: 8px 10px; }
+body.shot-editor .panel h2 { font-size: 14px; margin-bottom: 6px; }
+body.shot-editor label { margin: 4px 0; font-size: 13px; }
+body.shot-editor input, body.shot-editor select { padding: 4px 6px; font-size: 13px; }
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 22px;
+  border-bottom: 1px solid #1b2340;
+  background: linear-gradient(90deg, #0a0e1a, #12081f);
+}
+.brand { font-size: 26px; font-weight: 700; letter-spacing: 2px; color: #fff; }
+.brand-mark {
+  display: inline-block;
+  background: linear-gradient(180deg, #f6f9fc, #2ebeff);
+  color: #060a1a;
+  border-radius: 4px;
+  padding: 1px 7px;
+  margin-right: 6px;
+  box-shadow: 0 0 14px #ff2fb4;
+}
+.brand-sub { color: #ff5fd0; font-size: 18px; letter-spacing: 3px; }
+.brand-tag { color: #9aa7bd; font-size: 15px; letter-spacing: 1px; }
+
+#stage { padding: 18px 22px 6px; }
+#cover {
+  display: block;
+  width: 100%;
+  max-width: 1280px;
+  height: auto;
+  border: 1px solid #232c4d;
+  border-radius: 6px;
+  background: #04060e;
+}
+.error { color: #ff6b81; }
+
+#editor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  padding: 12px 22px 26px;
+}
+.panel {
+  background: #0a0e1a;
+  border: 1px solid #1b2340;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.panel h2 { margin: 0 0 10px; font-size: 17px; letter-spacing: 2px; color: #7de8ff; text-transform: uppercase; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+button {
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #e8ecf4;
+  background: #141a30;
+  border: 1px solid #2a355c;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+button:hover { border-color: #ff2fb4; }
+button.active { background: #ff2fb4; border-color: #ff2fb4; color: #fff; }
+label { display: block; font-size: 14px; color: #9aa7bd; margin: 8px 0; letter-spacing: 1px; }
+input, select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px 9px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  background: #141a30;
+  border: 1px solid #2a355c;
+  border-radius: 5px;
+}
+input[type="range"] { padding: 0; }
+.hint { color: #9aa7bd; font-size: 14px; line-height: 1.5; }
